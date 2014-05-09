@@ -1,0 +1,74 @@
+// Stable Marriage Problem has always a valid solution
+// Maximum Bipartite Matching can't give a valid solution for this type of problems
+#include <stdio.h>
+#include <queue>
+using namespace std;
+vector <int> woman[500+1];
+vector <int> man[500+1];
+int check[500+1]; // Pairs array
+int main()
+{
+    int N; // N is the number of pairs must be matched
+    scanf("%d",&N);
+    queue <int> circle;
+
+    // Input according to woman's priority
+    for(int i=1;i<=N;i++)
+    {
+        circle.push(i);
+        for(int j=1;j<=N;j++)
+        {
+            int like;
+            scanf("%d",&like);
+            woman[i].push_back(like);
+        }
+    }
+
+    // Input according to man's priority
+    for(int i=1;i<=N;i++)
+    {
+        for(int j=1;j<=N;j++)
+        {
+            int like;
+            scanf("%d",&like);
+            man[i].push_back(like);
+        }
+    }
+
+
+    while(circle.size()!=0)
+    {
+        int person=circle.front();circle.pop();
+
+        for(int i=0;i<man[person].size();i++)
+        {
+            int person_like=man[person][i];
+            if(check[person_like]==0)
+            {
+                check[person_like]=person;//both are free
+                break;
+            }
+            else
+            {
+                int flag=1;
+                for(int j=0;j<woman[person_like].size();j++)
+                {
+                    if(woman[person_like][j]==check[person_like])//woman likes her husband much
+                        break;
+                    else if(woman[person_like][j]==person)
+                    {
+                        circle.push(check[person_like]);//making free her present husband
+                        check[person_like]=person;//get married with new person
+                        flag=0;
+                    }
+                }
+                if(flag==0) break;
+            }
+        }
+    }
+    for(int i=1;i<=N;i++)
+    {
+        printf("Man %d get married with Woman %d \n",check[i],i);
+    }
+    return 0;
+}
