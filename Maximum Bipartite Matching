@@ -1,0 +1,41 @@
+// Khun's Algorithm 
+#include <stdio.h>
+#include <vector>
+#include <string.h>
+using namespace std;
+vector <int> graph[1000];
+int seen [1000] , check [1000] ;
+bool khun(int u)
+{
+    for(int i=0;i<graph[u].size();i++)
+    {
+        int v = graph[u][i];
+        if(seen[v]) continue;
+        seen[v]=1;
+        if(check[v]==0||khun(check[v]))
+        {
+            check[v]=u;
+            return true;
+        }
+    }
+    return false;
+}
+int main()
+{
+    int n , m ; // n is the numbers of boys and girls and m is the relations
+    scanf("%d%d",&n,&m);
+    for(int i=1;i<=m;i++)
+    {
+        int u , v ; // boy u choice girl v ; both u and v from 1 to n;
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+    }
+    int cnt = 0 ; //maximum matching
+    for(int i=1;i<=n;i++)
+    {
+        memset(seen,0,sizeof(seen));
+        if(khun(i)) cnt++;
+    }
+    printf("%d\n",cnt);
+    return 0;
+}
