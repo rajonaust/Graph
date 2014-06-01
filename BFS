@@ -1,0 +1,56 @@
+// BFS means Breadth First Search
+// BFS works for undirected graph
+// BFS finds a shortest path from one node to another node in a graph
+// Time complexity O(V+E)
+// V -> virtex E -> edge
+#include <cstdio>
+#include <queue>
+#include <vector>
+using namespace std;
+#define mx 100000
+struct node
+{
+    int u,w;
+};
+vector <int> graph[mx];
+bool visit[mx];
+int BFS(int source,int destination)
+{
+    queue <node> Q;
+    node obj;
+    obj.u=source;obj.w=0;
+    Q.push(obj);visit[source]=true;
+    while(Q.size()!=0)
+    {
+        obj = Q.front();Q.pop();
+        int u = obj.u , w = obj.w;
+        if(u==destination) return w;
+        for(int i=0;i<graph[u].size();i++)
+        {
+            int v = graph[u][i];
+            if(visit[v]==false)
+            {
+                visit[v]=true;
+                obj.u=v;obj.w=w+1;
+                Q.push(obj);
+            }
+        }
+    }
+    return -1; // There are no such paths exist between source and destination
+}
+int main()
+{
+    int N,M; // N is the numbers of junctions and M is the number of roads
+    scanf("%d%d",&N,&M);
+    while(M--)
+    {
+        int u , v ; // There is a road between junctions u and v
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    int x , y ; // Find the shortest path from junction x to junction y
+    scanf("%d%d",&x,&y);
+    printf("%d\n",BFS(x,y));
+    return 0;
+}
