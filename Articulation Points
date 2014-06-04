@@ -1,0 +1,51 @@
+// Articular Points is those points which make the graph split into different subgraphs by removing them
+// Articular Edges is those edges which make the graph spilt into different subgraphs by removing them
+// Time Complexity O(V+E)
+// V -> virtex E -> edge
+#include <cstdio>
+#include <vector>
+using namespace std;
+#define mx 1000
+vector <int> graph[mx];
+int entry[mx],low[mx],parent[mx],counter=0;
+bool visit[mx],ans[mx];
+void articular_point(int u)
+{
+    visit[u]=true;
+    int cnt = 0 ;
+    entry[u]=low[u]=++counter;
+    for(int i=0;i<graph[u].size();i++)
+    {
+        int v = graph[u][i];
+        if(visit[v]==false)
+        {
+            cnt++;
+            parent[v]=u;
+            articular_point(v);
+            low[u]=min(low[u],low[v]);
+            if(low[v]>=entry[u]&&parent[u]!=-1) ans[u]=true; // if(low[v]>entry[u]) then the edge u - v is a Articular Edge
+            if(parent[u]==-1&&cnt>1) ans[u]=true;
+        }
+        else if(parent[u]!=v)
+        {
+            low[u]=min(low[u],entry[v]);
+        }
+    }
+}
+int main()
+{
+    int N,M; // N is the number of points M is the number of connections
+    scanf("%d%d",&N,&M);
+    while(M--)
+    {
+        int u ,v ; // There is a bidirectional connection between the point u and the point v
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    for(int i=1;i<=N;i++) if(!visit[i]) articular_point(i);
+    int cnt=0; // Number of Articular Points
+    for(int i=1;i<=N;i++) if(ans[i]) cnt++;
+    printf("%d\n",cnt);
+    return 0;
+}
