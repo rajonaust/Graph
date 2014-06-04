@@ -35,7 +35,6 @@ void dfs2(int u,int cmp)
 }
 int main()
 {
-    freopen("input.txt","r",stdin);
     int N,M; // N is the number of nodes and M is the number of connections
     scanf("%d%d",&N,&M);
     while(M--)
