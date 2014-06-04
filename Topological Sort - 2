@@ -1,0 +1,50 @@
+// Time Complexity O(N^2)
+// Used the algorithm to find out a lexographically toplogical sorted sequence
+#include <stdio.h>
+using namespace std;
+#define mx 1000
+int graph[mx+10][mx+10];
+int take[mx+10],list[mx+10],indegree[mx+10];
+bool cycle=false;
+void topological_sort(int N)
+{
+    int i , j ;
+    for(i=1;i<=N;i++)
+    {
+        for(j=1;j<=N;j++)
+        {
+            if(indegree[j]==0&&take[j]==0)
+            {
+                // This step we take the subject j
+                list[i]=j;
+                take[j]=1;
+                for(int k=1;k<=N;k++)
+                {
+                    if(take[k]==0&&graph[j][k]==1) indegree[k]--;
+                }
+                break;
+            }
+        }
+        if(j==N+1)
+        {
+            cycle = true ;
+            break;
+        }
+    }
+}
+int main()
+{
+    int N,M; // N is the number of subjects and M is the number of connections
+    scanf("%d%d",&N,&M);
+    while(M--)
+    {
+        int u , v ; // The subject v must read after u
+        scanf("%d%d",&u,&v);
+        graph[u][v]=1;
+        indegree[v]++; // Number of subjects must read before the subject v read
+    }
+    topological_sort(N);
+    if(cycle) printf("No Solution!");
+    else for(int i=1;i<=N;i++) printf("%d ",list[i]);
+    return 0;
+}
