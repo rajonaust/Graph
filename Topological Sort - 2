@@ -40,8 +40,8 @@ int main()
     {
         int u , v ; // The subject v must read after u
         scanf("%d%d",&u,&v);
+        if(graph[u][v]==0)indegree[v]++; // Number of subjects must read before the subject v read
         graph[u][v]=1;
-        indegree[v]++; // Number of subjects must read before the subject v read
     }
     topological_sort(N);
     if(cycle) printf("No Solution!");
