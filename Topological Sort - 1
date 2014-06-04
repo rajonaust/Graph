@@ -1,0 +1,41 @@
+// Use Depth First Search (DFS) algorithm
+// Time Complexity O(V+E)
+// V -> virtex E -> edge
+#include <stdio.h>
+#include <vector>
+using namespace std;
+#define mx 1000
+vector <int> graph[mx+10] , seq ;
+int visit[mx+10],cycle=0;
+void dfs(int u)
+{
+    if(visit[u]==2||cycle) return;
+    if(visit[u]==1)
+    {
+        cycle = 1 ;
+        return;
+    }
+    visit[u]=1;
+    for(int i=0;i<graph[u].size();i++)
+    {
+        int v = graph[u][i];
+        dfs(v);
+    }
+    visit[u]=2;
+    seq.push_back(u);
+}
+int main()
+{
+    int N,M; // N is the number of subjects and M is the number of connections
+    scanf("%d%d",&N,&M);
+    while(M--)
+    {
+        int u , v ; // The subject v must read after u
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+    }
+    for(int i=1;i<=N;i++) dfs(i);
+    if(cycle) printf("Cycle Found!");
+    else for(int i=N-1;i>=0;i--) printf("%d ",seq[i]);
+    return 0;
+}
