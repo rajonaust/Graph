@@ -1,0 +1,43 @@
+// Flood Fill is an application of DFS
+// This is an example how to visit all the cell of a matrix by Flood Fill algorithm
+// Time Complexity O(V+E)
+// V -> every cell E-> adjacent cells of a cell
+#include <cstdio>
+using namespace std;
+#define mx 100
+int dx[]={-1,1,0,0} , dy[]={0,0,1,-1} ; // Direction of up , down , left and right
+int matrix[mx][mx];
+bool visit[mx][mx];
+bool check(int row,int col,int N)
+{
+    if(row>=1&&row<=N&&col>=1&&col<=N) return true;
+    else return false;
+}
+void dfs(int row,int col,int N,int index)
+{
+    if(visit[row][col]==true) return ;
+    visit[row][col]=true;
+    matrix[row][col]=index;
+    for(int i=0;i<4;i++)
+    {
+        int nrow = row+dx[i] , ncol = col+dy[i];
+        if(check(nrow,ncol,N)) dfs(nrow,ncol,N,index+1);
+    }
+}
+int main()
+{
+    int N ; // N is the number of rows and columns
+    scanf("%d",&N);
+    int row , col ; // From which position you start your journey
+    scanf("%d%d",&row,&col);
+    dfs(row,col,N,1);
+    for(int i=1;i<=N;i++)
+    {
+        for(int j=1;j<=N;j++)
+        {
+            printf("%d\t",matrix[i][j]);
+        }
+        puts("");
+    }
+    return 0;
+}
