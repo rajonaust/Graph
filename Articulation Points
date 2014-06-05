@@ -36,6 +36,7 @@ int main()
 {
     int N,M; // N is the number of points M is the number of connections
     scanf("%d%d",&N,&M);
+    for(int i=1;i<=N;i++) parent[i]=-1;
     while(M--)
     {
         int u ,v ; // There is a bidirectional connection between the point u and the point v
