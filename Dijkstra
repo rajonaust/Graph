@@ -29,6 +29,7 @@ int Dijkstra(int N,int source,int destination)
     {
         n = Q.top(); Q.pop();
         int u = n.u , w = n.w;
+        if(visit[u]) continue;
         visit[u]=true;
         if(u==destination) return w;
 
