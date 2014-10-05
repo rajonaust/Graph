@@ -2,7 +2,7 @@
 // BFS works for undirected graph
 // BFS finds a shortest path from one node to another node in a graph
 // Time complexity O(V+E)
-// V -> virtex E -> edge
+// V -> vertex E -> edge
 #include <cstdio>
 #include <queue>
 #include <vector>
