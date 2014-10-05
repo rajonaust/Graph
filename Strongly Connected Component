@@ -1,6 +1,6 @@
 // Kosaraju's Algorithm
 // Time Complexity for every dfs function O(V+E)
-// V -> Virtex E -> Edge
+// V -> Vertex E -> Edge
 #include <cstdio>
 #include <vector>
 #include <queue>
