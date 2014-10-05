@@ -1,5 +1,5 @@
 // Run time O(V*E)
-// V -> number of vartexs
+// V -> number of vertexs
 // E -> number of edges
 #include <stdio.h>
 #include <vector>
