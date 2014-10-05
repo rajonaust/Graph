@@ -1,7 +1,7 @@
 // Read Coreman's Introduction to algorithms (3rd edition) Page 609 to know
 // Tree Edge , Forward Edge , Back Edge , Cross Edge
 // Time Complexity O(V+E)
-// V -> virtex E -> edge
+// V -> vertex E -> edge
 #include <cstdio>
 #include <vector>
 using namespace std;
