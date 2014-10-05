@@ -1,6 +1,6 @@
 // Use Depth First Search (DFS) algorithm
 // Time Complexity O(V+E)
-// V -> virtex E -> edge
+// V -> vertex E -> edge
 #include <stdio.h>
 #include <vector>
 using namespace std;
