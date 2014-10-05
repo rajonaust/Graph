@@ -1,7 +1,7 @@
 // Articular Points is those points which make the graph split into different subgraphs by removing them
 // Articular Edges is those edges which make the graph spilt into different subgraphs by removing them
 // Time Complexity O(V+E)
-// V -> virtex E -> edge
+// V -> vertex E -> edge
 #include <cstdio>
 #include <vector>
 using namespace std;
