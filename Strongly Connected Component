@@ -3,18 +3,15 @@
 // V -> Vertex E -> Edge
 #include <cstdio>
 #include <vector>
-#include <queue>
 using namespace std;
 #define mx 1000
-vector <int> graph[mx+10] , graphGT[mx+10];
-queue <int> Q;
+vector <int> graph[mx+10] , graphGT[mx+10] , Q ;
 bool visit[mx+10];
 int t=0,cycle=0,dt[mx+10],ft[mx+10],ct[mx+10],indegree[mx+10],outdegree[mx+10];
 void dfs1(int u)
 {
     if(visit[u]) return;
     visit[u]=true;
-    Q.push(u);
     dt[u]=++t;
     for(int i=0;i<graph[u].size();i++)
     {
@@ -22,6 +19,7 @@ void dfs1(int u)
         dfs1(v);
     }
     ft[u]=++t;
+    Q.push_back(u);
 }
 void dfs2(int u,int cmp)
 {
@@ -45,9 +43,9 @@ int main()
         graphGT[v].push_back(u); // Reverse graph
     }
     for(int i=1;i<=N;i++) dfs1(i);
-    while(Q.size()!=0)
+    for(int i=Q.size()-1;i>=0;i--)
     {
-        int u = Q.front();Q.pop();
+        int u = Q[i];
         if(visit[u]==true)
         {
             printf("%d :: ",++cycle);
@@ -64,7 +62,7 @@ int main()
         }
     }
     int in=0,out=0;
-    for(int i=1;i<=cycle;i++)
+    for(int i=1;cycle!=1&&i<=cycle;i++)
     {
         if(indegree[i]==0) in++;
         if(outdegree[i]==0) out++;
