@@ -1,0 +1,53 @@
+// Minimum Vertex Cover Problem ( Graph + Dynamic Programing )
+// Give a undirected , unweighted , acyclic graph with N vertexes and N-1 edges .
+// This algorithm finds minimum number of vertexes are needed to cover all the edges that a edge at least one end point .
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <cstring>
+using namespace std;
+#define memo(a,b) memset(a,b,sizeof(a))
+#define mx 100000
+vector <int> graph[mx+10] ;
+int dp[mx+10][2];
+bool visit[mx+10];
+int solve(int u,int f,int isTake)
+{
+    visit[u]=true;
+    if(graph[u].size()==0) return 0 ;
+    int &ret = dp[u][isTake] ;
+    if(ret!=-1) return ret ;
+    ret=0;
+    for(int i=0;i<graph[u].size();i++)
+    {
+        int v = graph[u][i] ;
+        if(v==f) continue ;
+        if( isTake ) ret+=min(solve(v,u,0),solve(v,u,1));
+        else ret+=solve(v,u,1);
+    }
+    return ret+=isTake ;
+}
+int main()
+{
+    int N ;
+    scanf("%d",&N); // N is the number of vertexes .
+    for(int i=1;i<N;i++)
+    {
+        int u , v ;
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    memo(dp,-1);
+    memo(visit,false);
+    int ans = 0 ;
+    for(int i=1;i<=N;i++)
+    {
+        if(!visit[i])
+        {
+            ans+=min(solve(i,i,0),solve(i,i,1));
+        }
+    }
+    printf("%d\n",ans);
+    return 0;
+}
