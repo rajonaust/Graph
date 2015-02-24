@@ -1,0 +1,66 @@
+// Articular Edges / Bridges are those edges which make the graph split into different subgraphs by removing them .
+// Time Complexity O(V+E)
+// V -> vertex E -> edge
+#include <cstdio>
+#include <vector>
+#include <set>
+#include <utility>
+using namespace std;
+#define mx 1000
+vector <int> graph[mx];
+int entry[mx],low[mx],parent[mx],counter=0;
+bool visit[mx];
+set < pair<int,int> > bridge ;
+void articular_bridge(int u)
+{
+    visit[u]=true;
+    entry[u]=low[u]=++counter;
+    for(int i=0;i<graph[u].size();i++)
+    {
+        int v = graph[u][i];
+        if(visit[v]==false)
+        {
+            parent[v]=u;
+            articular_bridge(v);
+            low[u]=min(low[u],low[v]);
+            if(low[v]>entry[u]) bridge.insert(make_pair(min(u,v),max(u,v)));
+        }
+        else if(parent[u]!=v)
+        {
+            low[u]=min(low[u],entry[v]);
+        }
+    }
+}
+int main()
+{
+    int N,M; // N is the number of points M is the number of connections
+    scanf("%d%d",&N,&M);
+    for(int i=1;i<=N;i++) parent[i]=-1;
+    while(M--)
+    {
+        int u ,v ; // There is a bidirectional connection between the point u and the point v
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    for(int i=1;i<=N;i++) if(!visit[i]) articular_bridge(i);
+    printf("Total number of bridges = %d\n",bridge.size());
+    for(set< pair<int,int> >::iterator it = bridge.begin();it!=bridge.end();it++)
+        printf("%d -> %d\n",it->first,it->second);
+    return 0;
+}
+/*
+6 6
+1 2
+2 3
+3 1
+4 5
+5 6
+1 4
+*/
+/*
+Total number of bridges = 3
+1 -> 4
+4 -> 5
+5 -> 6
+*/
