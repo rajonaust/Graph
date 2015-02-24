@@ -1,0 +1,77 @@
+// An undirected graph is called biconnected graph if the graph is connected and there is no Articulation Points .
+// Time Complexity O(V+E)
+// V -> vertex E -> edge
+#include <cstdio>
+#include <vector>
+using namespace std;
+#define mx 1000
+vector <int> graph[mx];
+int entry[mx],low[mx],parent[mx],counter=0;
+bool visit[mx];
+bool articular_point(int u)
+{
+    visit[u]=true;
+    int cnt = 0 ;
+    entry[u]=low[u]=++counter;
+    for(int i=0;i<graph[u].size();i++)
+    {
+        int v = graph[u][i];
+        if(visit[v]==false)
+        {
+            cnt++;
+            parent[v]=u;
+            if(articular_point(v)) return true ;
+            low[u]=min(low[u],low[v]);
+            if(low[v]>=entry[u]&&parent[u]!=-1) return true ;
+            if(parent[u]==-1&&cnt>1) return true ;
+        }
+        else if(parent[u]!=v)
+        {
+            low[u]=min(low[u],entry[v]);
+        }
+    }
+    return false ;
+}
+bool check(int N)
+{
+    if(articular_point(1)) return false ;
+    for(int i=1;i<=N;i++) if(!visit[i]) return false ;
+    return true ;
+}
+int main()
+{
+    int N,M; // N is the number of points M is the number of connections
+    scanf("%d%d",&N,&M);
+    for(int i=1;i<=N;i++) parent[i]=-1;
+    while(M--)
+    {
+        int u ,v ; // There is a bidirectional connection between the point u and the point v
+        scanf("%d%d",&u,&v);
+        graph[u].push_back(v);
+        graph[v].push_back(u);
+    }
+    if(check(N)) puts("The graph is a biconnected graph .");
+    else puts("The graph is not a biconnected graph .");
+    return 0;
+}
+/*
+6 6
+1 2
+2 3
+3 1
+4 5
+5 6
+1 4
+*/
+/*
+The graph is not a biconnected graph .
+*/
+/*
+3 3
+1 2
+2 3
+3 1
+*/
+/*
+The graph is a biconnected graph .
+*/
