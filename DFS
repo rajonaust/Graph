@@ -13,17 +13,17 @@ void dfs(int u)
 {
     if(visit[u]) return;
     visit[u]=true;
-    ft[u]=++counter;
+    dt[u]=++counter;
     colour[u]=1;
     for(int i=0;i<graph[u].size();i++)
     {
         int v = graph[u][i];
         dfs(v);
-        if(ft[u]<ft[v]) printf("There is a forward edge between %d and %d\n",u,v); // Forward edge
+        if(dt[u]<dt[v]) printf("There is a forward edge between %d and %d\n",u,v); // Forward edge
         else if (colour[v]==2) printf("There is a cross edge between %d and %d\n",u,v); // Cross Edge
-        else if (colour[v]==1) printf("There is a back between %d and %d\n",u,v);  //  Back Edge
+        else if (colour[v]==1) printf("There is a back edge between %d and %d\n",u,v);  //  Back Edge
     }
-    dt[u]=++counter;
+    ft[u]=++counter;
     colour[u]=2;
 }
 int main()
@@ -51,12 +51,12 @@ int main()
 6 6
 */
 /*
-There is a back between 4 and 2
+There is a back edge between 4 and 2
 There is a forward edge between 3 and 4
 There is a forward edge between 2 and 3
 There is a forward edge between 1 and 2
 There is a forward edge between 1 and 4
 There is a cross edge between 5 and 3
-There is a back between 6 and 6
+There is a back edge between 6 and 6
 There is a forward edge between 5 and 6
 */
