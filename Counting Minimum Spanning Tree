@@ -1,0 +1,110 @@
+/* Kirchhoff's Theorem */
+/* Given N nodes and M vertexes . Counts numbers of minimum spanning tree can be made from this tree . */
+/* Time Complexity O(N^3) */
+
+#include <bits/stdc++.h>
+using namespace std;
+#define EPS 1e-9
+
+int n , m ;
+double Deg[15][15] , Adj[15][15] , L[15][15] ;
+
+double det(int n) // return the determine of matrix L which a square matrix of n*n size . Time Complexity O(N^3) .
+{
+    int i , j , k ;
+
+    for(i=1;i<=n;i++)
+    {
+        k = i ;
+        for(j=i+1;j<=n;j++) if(L[k][i] < L[j][i] ) k = j ;
+
+        swap(L[i],L[k]);
+        if(L[i][i]<EPS) return 0 ;
+
+        for(int j=i+1;j<=n;j++)
+        {
+            double x = L[i][j] / L[i][i] ;
+            for(k=i;k<=n;k++)
+            {
+                L[j][k] = L[j][k]-L[i][k]*x;
+            }
+        }
+    }
+
+    double ans = 1.0 ;
+    for(int i=1;i<=n;i++) ans*=L[i][i] ;
+
+    return fabs(ans) ;
+}
+int main()
+{
+    cin >> n >> m ; // n is the total number vertexes and M is the total number of edges .
+
+    while( m-- )
+    {
+        int u , v ;
+        cin >> u >> v ;
+        if(Deg[u][v]!=0.0) continue ;
+        Adj[u][u]+=1.0;
+        Adj[v][v]+=1.0;
+        Deg[u][v]+=1.0;
+        Deg[v][u]+=1.0;
+    }
+
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=n;j++) L[i][j] = Adj[i][j] - Deg[i][j] ;
+    }
+
+    cout << setprecision(0) << fixed << det(n-1) << endl ;
+
+    return 0;
+}
+/*
+4 5
+1 2
+2 3
+3 1
+2 4
+3 4
+*/
+/*
+8
+*/
+/*
+1 0
+*/
+/*
+1
+*/
+/*
+2 0
+*/
+/*
+0
+*/
+/*
+4 2
+1 2
+3 4
+*/
+/*
+0
+*/
+/*
+2 1
+1 2
+*/
+/*
+1
+*/
+/*
+4 4
+1 2
+2 3
+3 4
+4 1
+*/
+/*
+4
+*/
