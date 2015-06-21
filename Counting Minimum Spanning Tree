@@ -9,7 +9,7 @@ using namespace std;
 int n , m ;
 double Deg[15][15] , Adj[15][15] , L[15][15] ;
 
-double det(int n) // return the determine of matrix L which a square matrix of n*n size . Time Complexity O(N^3) .
+double det(int n) // return the determinant of matrix L which a square matrix of n*n size . Time Complexity O(N^3) .
 {
     int i , j , k ;
 
@@ -56,7 +56,7 @@ int main()
         for(int j=1;j<=n;j++) L[i][j] = Adj[i][j] - Deg[i][j] ;
     }
 
-    cout << setprecision(0) << fixed << det(n-1) << endl ;
+    cout << setprecision(0) << fixed << det(n-1) << endl ; // Taking floor value of determinant .
 
     return 0;
 }
