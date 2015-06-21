@@ -9,7 +9,7 @@ using namespace std;
 int n , m ;
 double Deg[15][15] , Adj[15][15] , L[15][15] ;
 
-double det(int n) // return the determinant of matrix L which a square matrix of n*n size . Time Complexity O(N^3) .
+double det(int n) // Return the determinant of matrix L which a square matrix of n*n size . Time Complexity O(N^3) .
 {
     int i , j , k ;
 
@@ -34,7 +34,7 @@ double det(int n) // return the determinant of matrix L which a square matrix of
     double ans = 1.0 ;
     for(int i=1;i<=n;i++) ans*=L[i][i] ;
 
-    return fabs(ans) ;
+    return fabs(ans) ; // Avoid Negative .
 }
 int main()
 {
