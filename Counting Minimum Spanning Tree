@@ -1,5 +1,5 @@
 /* Kirchhoff's Theorem */
-/* Given N nodes and M vertexes . Counts numbers of minimum spanning tree can be made from this tree . */
+/* Given N vertexes and M edges . Counts numbers of minimum spanning tree can be made from this tree . */
 /* Time Complexity O(N^3) */
 
 #include <bits/stdc++.h>
